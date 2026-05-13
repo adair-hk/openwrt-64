@@ -15,8 +15,8 @@ sed -i 's/192.168.1.1/192.168.1.4/g' package/base-files/files/bin/config_generat
 
 # 针对 Lean 源码 (LEDE) 的最佳匹配：
 rm -rf package/lean/luci-theme-argon
-git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/lean/luci-theme-argon
-git clone -b 18.06 https://github.com/jerrykuku/luci-app-argon-config.git package/lean/luci-app-argon-config
+git clone https://github.com/jerrykuku/luci-theme-argon.git package/lean/luci-theme-argon
+git clone https://github.com/jerrykuku/luci-app-argon-config.git package/lean/luci-app-argon-config
 
 # Edge 皮肤
 rm -rf package/lean/luci-theme-edge
