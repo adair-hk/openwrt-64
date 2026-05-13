@@ -18,3 +18,10 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/M
 
 # Modify hostname
 #sed -i 's/OpenWrt/P3TERX-Router/g' package/base-files/files/bin/config_generate
+
+# 删除冲突源码（需要安装samba4使用）
+rm -rf package/lean/autosamba
+
+#双重保险
+echo "CONFIG_PACKAGE_autosamba=n" >> .config
+sed -i 's/CONFIG_PACKAGE_autosamba=y/CONFIG_PACKAGE_autosamba=n/g' .config
