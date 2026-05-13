@@ -150,11 +150,15 @@ jobs:
         retain_days: 0
         keep_minimum_runs: 2
 
-    - name: Remove old Releases
-      uses: dev-drprasad/delete-older-releases@master
+    - name: Remove old Releases (Native GH CLI)
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-      with:
-        keep_latest: 3
-        delete_tags: true
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        # 获取 Release 列表，保留最新的 2 个，删除其余的
+        # tail -n +3 的意思是：跳过前 2 行（即保留最新的 2 个），处理第 3 行及以后的内容
+        releases=$(gh release list --limit 100 | tail -n +3 | awk '{print $1}')
+        for release in $releases; do
+          echo "正在删除旧 Release 及标签: $release"
+          gh release delete "$release" --yes --cleanup-tag
+        done
